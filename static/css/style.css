@@ -53,6 +53,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   background-color: #d8d8d9;
+  position: fixed;
 }
 
 .nav-logo {
@@ -152,26 +153,27 @@ nav {
 .product-container{
     width: 100%;
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+    /* box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px; */
 }
 
-.product{
+.product-homepage{
     display: flex;
     flex-direction: column;
     justify-content:center;
     align-items: center;
-    width:25%;
+    width:22%;
     font-size: 1.1rem;
     padding: 0;
-    margin: 0;
+    margin: 5px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
 }
 
-.product img{
+.product img, .product-homepage img{
     width: 200px;
 }
-.product .order-btn{
+.product .order-btn, .product-homepage .order-btn{
     color: #fff;
     text-decoration: none;
     background-color: #fb7725;
@@ -187,6 +189,72 @@ nav {
     padding: 10px 20px;
     margin-top: 30px;
     border-radius: 10px;
+}
+
+
+/* Product page */
+
+.product-category{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.product-menu{
+    width:15rem;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+}
+
+.product-page{
+    margin-left: 16rem;
+}
+.product-menu ul{
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.product-menu ul li{
+
+    padding: 10px 30px;
+}
+
+#active{
+    background-color: #ffdbc4;
+    border-radius: 5px;
+}
+
+.product-menu ul li i{
+    color:#fb7725
+}
+
+.product-menu ul a{
+    text-decoration: none;
+    color:#000;
+}
+.product{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    width:32%;
+    font-size: 1.1rem;
+    padding: 0;
+    margin: 5px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+}
+
+.product-page-main-container{
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    /* justify-content: center; */
+    margin-top: 79px;
+    /* align-items: center; */
 }
 /* Responsive adjustments */
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
