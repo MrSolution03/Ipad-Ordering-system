@@ -1,0 +1,543 @@
+DAY1:
+Description: Add the main file server program with basic structure.
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <pthread.h>
+
+#define DEFAULT_BUFLEN 1024
+
+struct user {
+    char username[50];
+    char password[50];
+};
+
+struct user credentials[100]; // Maximum of 100 users
+int num_users = 0;
+
+char base_directory[100];
+int server_port;
+
+void load_credentials(char *filename) {
+    // Placeholder for loading credentials
+}
+
+int authenticate(char *username, char *password) {
+    // Placeholder for authenticating users
+    return 0;
+}
+
+void *handle_client(void *arg) {
+    // Placeholder for handling client connections
+    return NULL;
+}
+
+int main(int argc, char *argv[]) {
+    // Placeholder for main server logic
+    return 0;
+}
+
+Commit 2: Add Credential Loading Functionality
+Description: Implement the load_credentials function to load user credentials from a file.
+
+void load_credentials(char *filename) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        perror("Failed to open password file");
+        exit(EXIT_FAILURE);
+    }
+    char line[100];
+    while (fgets(line, sizeof(line), file)) {
+        sscanf(line, "%[^:]:%s", credentials[num_users].username, credentials[num_users].password);
+        num_users++;
+    }
+    fclose(file);
+}
+
+Commit 3: Add Authentication Function
+Description: Implement the authenticate function to verify user credentials.
+
+int authenticate(char *username, char *password) {
+    for (int i = 0; i < num_users; ++i) {
+        if (strcmp(credentials[i].username, username) == 0 && strcmp(credentials[i].password, password) == 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+Commit 4: Implement Client Handling (Basic)
+Description: Set up the basic structure for the handle_client function.
+void *handle_client(void *arg) {
+    int client_socket = *(int *)arg;
+    char buffer[DEFAULT_BUFLEN];
+    int bytes_read;
+
+    printf("Sending welcome message\n");
+    send(client_socket, "Welcome to Bob's file server.\n", 29, 0);
+
+    char username[50] = "";
+    int authenticated = 0;
+
+    while (1) {
+        memset(buffer, 0, sizeof(buffer));
+        bytes_read = recv(client_socket, buffer, DEFAULT_BUFLEN - 1, 0);
+        if (bytes_read <= 0) {
+            printf("Client disconnected or error occurred\n");
+            break;
+        }
+
+        printf("Received command: %s\n", buffer);
+
+        char command[50];
+        sscanf(buffer, "%s", command);
+
+        // Placeholder for command handling logic
+    }
+    close(client_socket);
+    return NULL;
+}
+
+DAY2:
+Commit 5: Implement USER Command
+Description: Add the USER command handling for client authentication.
+void *handle_client(void *arg) {
+    int client_socket = *(int *)arg;
+    char buffer[DEFAULT_BUFLEN];
+    int bytes_read;
+
+    printf("Sending welcome message\n");
+    send(client_socket, "Welcome to Bob's file server.\n", 29, 0);
+
+    char username[50] = "";
+    int authenticated = 0;
+
+    while (1) {
+        memset(buffer, 0, sizeof(buffer));
+        bytes_read = recv(client_socket, buffer, DEFAULT_BUFLEN - 1, 0);
+        if (bytes_read <= 0) {
+            printf("Client disconnected or error occurred\n");
+            break;
+        }
+
+        printf("Received command: %s\n", buffer);
+
+        char command[50];
+        sscanf(buffer, "%s", command);
+
+        if (strcmp(command, "USER") == 0 && !authenticated) {
+            char user[50], pass[50];
+            sscanf(buffer, "%*s %s %s", user, pass);
+            if (authenticate(user, pass)) {
+                authenticated = 1;
+                strcpy(username, user);
+                send(client_socket, "200 User granted access.\n", 25, 0);
+            } else {
+                send(client_socket, "400 User not found.\n", 20, 0);
+            }
+        } else {
+            send(client_socket, "400 Please authenticate using USER command.\n", 44, 0);
+        }
+    }
+    close(client_socket);
+    return NULL;
+}
+
+Commit 6: Implement LIST Command
+Description: Add the LIST command handling to list directory contents.
+        if (strcmp(command, "LIST") == 0) {
+            FILE *pipe;
+            char cmd[150];
+            snprintf(cmd, sizeof(cmd), "ls -l %s", base_directory);
+            pipe = popen(cmd, "r");
+            if (pipe == NULL) {
+                send(client_socket, "400 Command failed.\n", 20, 0);
+            } else {
+                char line[256];
+                while (fgets(line, sizeof(line), pipe) != NULL) {
+                    send(client_socket, line, strlen(line), 0);
+                }
+                pclose(pipe);
+                send(client_socket, ".\n", 2, 0);
+            }
+        } else {
+
+
+Commit 7: Implement GET Command
+Description: Add the GET command to allow file retrieval.
+        } else if (strcmp(command, "GET") == 0) {
+            char filename[50];
+            sscanf(buffer, "%*s %s", filename);
+            char filepath[150];
+            snprintf(filepath, sizeof(filepath), "%s/%s", base_directory, filename);
+            FILE *file = fopen(filepath, "rb");
+            if (file == NULL) {
+                send(client_socket, "404 File not found.\n", 20, 0);
+            } else {
+                char file_buffer[DEFAULT_BUFLEN];
+                size_t bytes_read;
+                while ((bytes_read = fread(file_buffer, 1, sizeof(file_buffer), file)) > 0) {
+                    send(client_socket, file_buffer, bytes_read, 0);
+                }
+                fclose(file);
+                send(client_socket, "\r\n.\r\n", 5, 0);
+            }
+        } else {
+
+Commit 8: Implement PUT Command
+Description: Add the PUT command to allow file upload.
+        } else if (strcmp(command, "PUT") == 0) {
+            char filename[50];
+            sscanf(buffer, "%*s %s", filename);
+            char filepath[150];
+            snprintf(filepath, sizeof(filepath), "%s/%s", base_directory, filename);
+            FILE *file = fopen(filepath, "wb");
+            if (file == NULL) {
+                send(client_socket, "400 File cannot be saved.\n", 26, 0);
+            } else {
+                char *file_content = strstr(buffer, "\n") + 1;
+                fwrite(file_content, 1, strlen(file_content), file);
+                fclose(file);
+                char response[100];
+                snprintf(response, sizeof(response), "200 %zu Byte file retrieved by server and was saved.\n", strlen(file_content));
+                send(client_socket, response, strlen(response), 0);
+            }
+        } else {
+
+DAY3:
+Commit 9: Implement DEL Command
+Description: Add the DEL command to allow file deletion.
+        } else if (strcmp(command, "DEL") == 0) {
+            char filename[50];
+            sscanf(buffer, "%*s %s", filename);
+            char filepath[150];
+            snprintf(filepath, sizeof(filepath), "%s/%s", base_directory, filename);
+            if (remove(filepath) == 0) {
+                send(client_socket, "200 File deleted.\n", 18, 0);
+            } else {
+                send(client_socket, "404 File not found.\n", 20, 0);
+            }
+        } else {
+
+Commit 10: Implement QUIT Command
+Description: Add the QUIT command to handle client disconnection.
+
+        } else if (strcmp(command, "QUIT") == 0) {
+            send(client_socket, "Goodbye!\n", 9, 0);
+            break;
+        } else {
+
+Commit 11: Refine Command Handling
+Description: Add command validation and error handling for authenticated users.
+
+            send(client_socket, "400 Invalid command.\n", 21, 0);
+        }
+    }
+    close(client_socket);
+    return NULL;
+}
+
+Commit 12: Handle Non-Authenticated State
+Description: Add handling for commands when the user is not authenticated.
+
+        } else {
+            send(client_socket, "400 Please authenticate using USER command.\n", 44, 0);
+        }
+    }
+    close(client_socket);
+    return NULL;
+}
+
+DAY4:
+
+Commit 13: Improve Logging
+Description: Add more detailed logging to server operations for debugging.
+void *handle_client(void *arg) {
+    int client_socket = *(int *)arg;
+    char buffer[DEFAULT_BUFLEN];
+    int bytes_read;
+
+    printf("Sending welcome message\n");
+    send(client_socket, "Welcome to Bob's file server.\n", 29, 0);
+
+    char username[50] = "";
+    int authenticated = 0;
+
+    while (1) {
+        memset(buffer, 0, sizeof(buffer));
+        bytes_read = recv(client_socket, buffer, DEFAULT_BUFLEN - 1, 0);
+        if (bytes_read <= 0) {
+            printf("Client disconnected or error occurred\n");
+            break;
+        }
+
+        printf("Received command: %s\n", buffer);
+
+        char command[50];
+        sscanf(buffer, "%s", command);
+
+        if (strcmp(command, "USER") == 0 && !authenticated) {
+            char user[50], pass[50];
+            sscanf(buffer, "%*s %s %s", user, pass);
+            if (authenticate(user, pass)) {
+                authenticated = 1;
+                strcpy(username, user);
+                printf("User %s authenticated\n", user);
+                send(client_socket, "200 User granted access.\n", 25, 0);
+            } else {
+                printf("Authentication failed for user %s\n", user);
+                send(client_socket, "400 User not found.\n", 20, 0);
+            }
+        } else if (authenticated) {
+            printf("User %s issued command: %s\n", username, command);
+            if (strcmp(command, "LIST") == 0) {
+                FILE *pipe;
+                char cmd[150];
+                snprintf(cmd, sizeof(cmd), "ls -l %s", base_directory);
+                pipe = popen(cmd, "r");
+                if (pipe == NULL) {
+                    send(client_socket, "400 Command failed.\n", 20, 0);
+                } else {
+                    char line[256];
+                    while (fgets(line, sizeof(line), pipe) != NULL) {
+                        send(client_socket, line, strlen(line), 0);
+                    }
+                    pclose(pipe);
+                    send(client_socket, ".\n", 2, 0);
+                }
+            } else if (strcmp(command, "GET") == 0) {
+                char filename[50];
+                sscanf(buffer, "%*s %s", filename);
+                char filepath[150];
+                snprintf(filepath, sizeof(filepath), "%s/%s", base_directory, filename);
+                FILE *file = fopen(filepath, "rb");
+                if (file == NULL) {
+                    send(client_socket, "404 File not found.\n", 20, 0);
+                } else {
+                    char file_buffer[DEFAULT_BUFLEN];
+                    size_t bytes_read;
+                    while ((bytes_read = fread(file_buffer, 1, sizeof(file_buffer), file)) > 0) {
+                        send(client_socket, file_buffer, bytes_read, 0);
+                    }
+                    fclose(file);
+                    send(client_socket, "\r\n.\r\n", 5, 0);
+                }
+            } else if (strcmp(command, "PUT") == 0) {
+                char filename[50];
+                sscanf(buffer, "%*s %s", filename);
+                char filepath[150];
+                snprintf(filepath, sizeof(filepath), "%s/%s", base_directory, filename);
+                FILE *file = fopen(filepath, "wb");
+                if (file == NULL) {
+                    send(client_socket, "400 File cannot be saved.\n", 26, 0);
+                } else {
+                    char *file_content = strstr(buffer, "\n") + 1;
+                    fwrite(file_content, 1, strlen(file_content), file);
+                    fclose(file);
+                    char response[100];
+                    snprintf(response, sizeof(response), "200 %zu Byte file retrieved by server and was saved.\n", strlen(file_content));
+                    send(client_socket, response, strlen(response), 0);
+                }
+            } else if (strcmp(command, "DEL") == 0) {
+                char filename[50];
+                sscanf(buffer, "%*s %s", filename);
+                char filepath[150];
+                snprintf(filepath, sizeof(filepath), "%s/%s", base_directory, filename);
+                if (remove(filepath) == 0) {
+                    send(client_socket, "200 File deleted.\n", 18, 0);
+                } else {
+                    send(client_socket, "404 File not found.\n", 20, 0);
+                }
+            } else if (strcmp(command, "QUIT") == 0) {
+                send(client_socket, "Goodbye!\n", 9, 0);
+                break;
+            } else {
+                send(client_socket, "400 Invalid command.\n", 21, 0);
+            }
+        } else {
+            send(client_socket, "400 Please authenticate using USER command.\n", 44, 0);
+        }
+    }
+    close(client_socket);
+    return NULL;
+}
+
+Commit 14: Add Socket Options
+Description: Set socket options to reuse address and port.
+int main(int argc, char *argv[]) {
+    int opt;
+    char password_file[100];
+
+    while ((opt = getopt(argc, argv, "d:p:u:")) != -1) {
+        switch (opt) {
+            case 'd':
+                strcpy(base_directory, optarg);
+                break;
+            case 'p':
+                server_port = atoi(optarg);
+                break;
+            case 'u':
+                strcpy(password_file, optarg);
+                break;
+            default:
+                fprintf(stderr, "Usage: %s -d directory -p port -u password_file\n", argv[0]);
+                return 1;
+        }
+    }
+
+    if (base_directory[0] == '\0' || server_port <= 0 || password_file[0] == '\0') {
+        fprintf(stderr, "Usage: %s -d directory -p port -u password_file\n", argv[0]);
+        return 1;
+    }
+
+    load_credentials(password_file);
+
+    int server_socket, client_socket;
+    struct sockaddr_in server_addr, client_addr;
+    socklen_t client_addr_len = sizeof(client_addr);
+
+    // Create the socket
+    if ((server_socket = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+        perror("Socket creation failed");
+        exit(EXIT_FAILURE);
+    }
+
+    // Set socket options to reuse address and port
+    int opt_val = 1;
+    setsockopt(server_socket, SOL_SOCKET, SO_REUSEADDR, &opt_val, sizeof(opt_val));
+
+    // Prepare the sockaddr_in structure
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_addr.s_addr = INADDR_ANY;
+    server_addr.sin_port = htons(server_port);
+
+    // Bind the socket
+    if (bind(server_socket, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
+        perror("Bind failed");
+        close(server_socket);
+        exit(EXIT_FAILURE);
+    }
+
+    // Listen on the socket
+    if (listen(server_socket, 10) < 0) {
+        perror("Listen failed");
+        close(server_socket);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("Server listening on port %d\n", server_port);
+
+    while (1) {
+        // Accept an incoming connection
+        if ((client_socket = accept(server_socket, (struct sockaddr *)&client_addr, &client_addr_len)) < 0) {
+            perror("Accept failed");
+            continue;
+        }
+
+        printf("Connected: %s:%d\n", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
+
+        // Create a new thread for each client connection
+        pthread_t client_thread;
+        if (pthread_create(&client_thread, NULL, handle_client, (void *)&client_socket) != 0) {
+            perror("Thread creation failed");
+        } else {
+            pthread_detach(client_thread); // Detach the thread so it cleans up after itself
+        }
+    }
+
+    close(server_socket);
+    return 0;
+}
+
+Commit 15: Enhance Error Handling
+Description: Improve error handling in main server loop.
+int main(int argc, char *argv[]) {
+    int opt;
+    char password_file[100];
+
+    while ((opt = getopt(argc, argv, "d:p:u:")) != -1) {
+        switch (opt) {
+            case 'd':
+                strcpy(base_directory, optarg);
+                break;
+            case 'p':
+                server_port = atoi(optarg);
+                break;
+            case 'u':
+                strcpy(password_file, optarg);
+                break;
+            default:
+                fprintf(stderr, "Usage: %s -d directory -p port -u password_file\n", argv[0]);
+                return 1;
+        }
+    }
+
+    if (base_directory[0] == '\0' || server_port <= 0 || password_file[0] == '\0') {
+        fprintf(stderr, "Usage: %s -d directory -p port -u password_file\n", argv[0]);
+        return 1;
+    }
+
+    load_credentials(password_file);
+
+    int server_socket, client_socket;
+    struct sockaddr_in server_addr, client_addr;
+    socklen_t client_addr_len = sizeof(client_addr);
+
+    // Create the socket
+    if ((server_socket = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+        perror("Socket creation failed");
+        exit(EXIT_FAILURE);
+    }
+
+    // Set socket options to reuse address and port
+    int opt_val = 1;
+    setsockopt(server_socket, SOL_SOCKET, SO_REUSEADDR, &opt_val, sizeof(opt_val));
+
+    // Prepare the sockaddr_in structure
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_addr.s_addr = INADDR_ANY;
+    server_addr.sin_port = htons(server_port);
+
+    // Bind the socket
+    if (bind(server_socket, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
+        perror("Bind failed");
+        close(server_socket);
+        exit(EXIT_FAILURE);
+    }
+
+    // Listen on the socket
+    if (listen(server_socket, 10) < 0) {
+        perror("Listen failed");
+        close(server_socket);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("Server listening on port %d\n", server_port);
+
+    while (1) {
+        // Accept an incoming connection
+        if ((client_socket = accept(server_socket, (struct sockaddr *)&client_addr, &client_addr_len)) < 0) {
+            perror("Accept failed");
+            continue;
+        }
+
+        printf("Connected: %s:%d\n", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
+
+        // Create a new thread for each client connection
+        pthread_t client_thread;
+        if (pthread_create(&client_thread, NULL, handle_client, (void *)&client_socket) != 0) {
+            perror("Thread creation failed");
+        } else {
+            pthread_detach(client_thread); // Detach the thread so it cleans up after itself
+        }
+    }
+
+    close(server_socket);
+    return 0;
+}
+
+
+DAY5:
