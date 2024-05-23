@@ -1,104 +1,192 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="static/css/style.css">
-        <link rel="stylesheet" href="static/fontawesome/css/all.css">
-    </head>
-    <body>
-       <nav>
-        <div class="nav-logo">
-            <img src="static/images/logo.png" alt="logo">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/fontawesome/css/all.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <nav>
+            <div class="nav-logo">
+                <img src="static/images/logo.png" alt="logo">
+            </div>
+
+            <div class="quote-container">
+                <div id="quoteBox">
+                  <p class="quote-text">"Good food is good mood!"</p>
+                  <p class="quote-author">- Anonymous</p>
+                </div>
+              </div>
+            <div class="nav-auth">
+                <div class="basket">
+                    <i class="fa-duotone fa-basket-shopping"></i>
+                    <span id="basketCount">0</span>
+                </div>
+                <div class="user">
+                    <i class="fa-duotone fa-user"></i>
+                </div>
+            </div>
+
+        </nav>
+        <section class="product-menu">
+            <ul>
+                <li class="tab activeList" id="drink-tab"><a>&#127865;&nbsp;drinks</a></li>
+                <li class="tab" id="chicken-tab"><a><i class="fa-duotone fa-drumstick"></i>&nbsp;&nbsp;Chickens</a></li>
+                <li class="tab" id="rice-tab"><a>&#127834;&nbsp;rice</a></li>
+                <li class="tab" id="friese-tab"><a><i class="fa-duotone fa-french-fries"></i>&nbsp;&nbsp;friese</a></li>
+                <li class="tab" id="burger-tab"><a>&#127828;&nbsp;burger</a></li>
+                <li class="tab" id="kebab-tab"><a><i class="fa-duotone fa-shish-kebab"></i>&nbsp;&nbsp;kebab</a></li>
+            </ul>
+        </section>
+    </div>
+
+    <section class="page-main-container">
+        <div class="product-container drink">
+            <div class="product">
+                <p class="product-name">Product</p>
+                <img src="static/images/product/fries-20314.png" alt="product">
+                <p class="price-container"><span class="price">$10</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
+            </div>
+            <div class="product">
+                <p class="product-name">Product</p>
+                <img src="static/images/product/fries-20314.png" alt="product">
+                <p class="price-container"><span class="price">$10</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
+            </div>
+            <div class="product">
+                <p class="product-name">Product</p>
+                <img src="static/images/product/fries-20314.png" alt="product">
+                <p class="price-container"><span class="price">$10</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
+            </div>
+            <div class="product">
+                <p class="product-name">Product</p>
+                <img src="static/images/product/fries-20314.png" alt="product">
+                <p class="price-container"><span class="price">$10</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
+            </div>
+            
+            <!-- Add other products as needed -->
         </div>
-        <div class="nav-search-container">
-            <input type="text" class="nav-search" placeholder="Search..."><i class="fa-regular fa-magnifying-glass"></i>
+        <div class="product-container chicken">
+            <div class="product">
+                <p class="product-name">Product</p>
+                <img src="static/images/product/fries-20314.png" alt="product">
+                <p class="price-container"><span class="price">$10</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
+            </div>
+            <div class="product">
+                <p class="product-name">Product</p>
+                <img src="static/images/product/fries-20314.png" alt="product">
+                <p class="price-container"><span class="price">$10</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
+            </div>
+            <div class="product">
+                <p class="product-name">Product</p>
+                <img src="static/images/product/fries-20314.png" alt="product">
+                <p class="price-container"><span class="price">$10</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
+            </div>
+            <!-- Add other products as needed -->
         </div>
-        <div class="nav-auth">
-            <div class="user">
-                <i class="fa-duotone fa-user"></i>
+        <div class="product-container rice">
+            <div class="product">
+                <p class="product-name">Product</p>
+                <img src="static/images/product/fries-20314.png" alt="product">
+                <p class="price-container"><span class="price">$10</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
             </div>
-            <div class="basket">
-                <i class="fa-duotone fa-cart-shopping"></i>
-                <span>0</span>
-            </div>
+            <!-- Add other products as needed -->
         </div>
-       </nav>
-       <section class="slider-container">
-        <div class="slider">
-            <div class="header-slide-div">
-                <img src="static/images/welcome.png"/>
-                <h1>Welcome to <br>Mr. F</h1>
+        <div class="product-container friese">
+            <div class="product">
+                <p class="product-name">Product</p>
+                <img src="static/images/product/fries-20314.png" alt="product">
+                <p class="price-container"><span class="price">$10</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
             </div>
-            <div class="header-slide-div">
-                <img src="static/images/slide-pic-1.png"/>
-                <h1>You can get this <br> with 40% off</h1>
-            </div>
-            <div class="header-slide-div">
-                <img src="static/images/slide-pic-2.png"/>
-                <h1>You can get this <br> with 30% off</h1>
-            </div>
+            <!-- Add other products as needed -->
         </div>
-       </section>
-       <section class="page-main-container">
-             <div class="product-container">
-                <div class="product-homepage">
-                    <p class="product-name">Product</p>
-                    <img src="static/images/product/fries-20314.png" alt="product">
-                    <p class="price-container"><span class="price">$10$</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-                </div>
+        <div class="product-container burger">
+            <div class="product">
+                <p class="product-name">Product</p>
+                <img src="static/images/product/fries-20314.png" alt="product">
+                <p class="price-container"><span class="price">$10</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
+            </div>
+            <!-- Add other products as needed -->
+        </div>
+        <div class="product-container kebab">
+            <div class="product">
+                <p class="product-name">Product</p>
+                <img src="static/images/product/fries-20314.png" alt="product">
+                <p class="price-container"><span class="price">$10</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
+            </div>
+            <!-- Add other products as needed -->
+        </div>
+    </section>
 
-                <div class="product-homepage">
-                    <p class="product-name">Product</p>
-                    <img src="static/images/product/fries-20314.png" alt="product">
-                    <p class="price-container"><span class="price">$10$</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-                </div>
+    <div id="basketModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Order Summary</h2>
+            <div id="orderItems">
+                <!-- Order items will be appended here dynamically -->
+            </div>
+            <div>
+                <label for="customerName">Customer Name:</label>
+                <input type="text" id="customerName" name="customerName">
+            </div>
+            <div>
+                <label>Order Number: <span id="orderNumber"></span></label>
+            </div>
+            <button id="confirmOrderBtn">Confirm Order</button>
+        </div>
+    </div>
 
-                <div class="product-homepage">
-                    <p class="product-name">Product</p>
-                    <img src="static/images/product/fries-20314.png" alt="product">
-                    <p class="price-container"><span class="price">$10$</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-                </div>
+    <p style="margin-bottom:0px; text-align: center;">© 2024 Mr. F</p>
 
-                <div class="product-homepage">
-                    <p class="product-name">Product</p>
-                    <img src="static/images/product/fries-20314.png" alt="product">
-                    <p class="price-container"><span class="price">$10$</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-                </div>
+    <script src="static/js/jquery-3.7.1.js"></script>
+    <script src="static/js/add_to_basket.js"></script>
+    <script src="static/js/slide_text.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".tab").click(function () {
+                // Remove the activeList class from all tabs
+                $(".tab").removeClass("activeList");
+        
+                // Add the activeList class to the clicked tab
+                $(this).addClass("activeList");
+        
+                // Determine which product container to show
+                var targetClass;
+        
+                if ($(this).attr("id") === "drink-tab") {
+                    targetClass = ".product-container.drink";
+                } else if ($(this).attr("id") === "chicken-tab") {
+                    targetClass = ".product-container.chicken";
+                } else if ($(this).attr("id") === "rice-tab") {
+                    targetClass = ".product-container.rice";
+                } else if ($(this).attr("id") === "friese-tab") {
+                    targetClass = ".product-container.friese";
+                } else if ($(this).attr("id") === "burger-tab") {
+                    targetClass = ".product-container.burger";
+                } else if ($(this).attr("id") === "kebab-tab") {
+                    targetClass = ".product-container.kebab";
+                }
+        
+                // Fade out all product containers, then fade in the target container
+                $(".product-container.active").fadeOut(300, function () {
+                    $(this).removeClass("active").removeAttr("style"); // Remove inline style
+                    $(targetClass).fadeIn(300).addClass("active").removeAttr("style"); // Remove inline style
+                });
+            });
+        
+            // Set the default active tab and container
+            $("#drink-tab").addClass("activeList");
+            $(".product-container.drink").addClass("active").removeAttr("style"); // Remove inline style
+        });
+        
+    </script>
+</body>
 
-                <div class="product-homepage">
-                    <p class="product-name">Product</p>
-                    <img src="static/images/product/fries-20314.png" alt="product">
-                    <p class="price-container"><span class="price">$10$</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-                </div>
-
-                <div class="product-homepage">
-                    <p class="product-name">Product</p>
-                    <img src="static/images/product/fries-20314.png" alt="product">
-                    <p class="price-container"><span class="price">$10$</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-                </div>
-
-                <div class="product-homepage">
-                    <p class="product-name">Product</p>
-                    <img src="static/images/product/fries-20314.png" alt="product">
-                    <p class="price-container"><span class="price">$10$</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-                </div>
-
-                <div class="product-homepage">
-                    <p class="product-name">Product</p>
-                    <img src="static/images/product/fries-20314.png" alt="product">
-                    <p class="price-container"><span class="price">$10$</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-                </div>
-                
-             </div>
-             <a href="product.html" class="see-more-btn">the menu</a>
-       </section>
-
-        <script src="static/js/index.js"></script>
-        <script src="static/js/home_pic_slider.js"></script>
-        <p style="margin-bottom:0px">© 2024 Mr. F</p>
-    </body>
 </html>
