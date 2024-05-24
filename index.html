@@ -1,246 +1,45 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
     <link rel="stylesheet" href="static/css/style.css">
-    <link rel="stylesheet" href="static/fontawesome/css/all.css">
 </head>
-
 <body>
-
-    <div class="header">
-        <nav>
-            <div class="nav-logo">
-                <img src="static/images/logo.png" alt="logo">
-            </div>
-            <div class="nav-search-container">
-                <input type="text" id="foodSearchInput" placeholder="Search for food...">
-                <i id="searchIcon" class="fas fa-search"></i>
-              </div>
-            <div class="nav-auth">
-                <div class="basket">
-                    <i class="fa-duotone fa-basket-shopping"></i>
-                    <span id="basketCount">0</span>
+    <div class="main-container-login-page">
+        <div class="login-container">
+            <img src="static/images/logo.png" alt="logo" class="logo">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
                 </div>
-                <div class="user">
-                    <i class="fa-duotone fa-user"></i>
-                    <div id="userMenu" class="user-menu">
-                        <button id="logoutBtn">Logout</button>
-                    </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
                 </div>
-            </div>
-
-        </nav>
-        <section class="product-menu">
-            <ul>
-                <li class="tab activeList" id="drink-tab"><a>&#127865;&nbsp;drinks</a></li>
-                <li class="tab" id="chicken-tab"><a><i class="fa-duotone fa-drumstick"></i>&nbsp;&nbsp;Chickens</a></li>
-                <li class="tab" id="rice-tab"><a>&#127834;&nbsp;rice</a></li>
-                <li class="tab" id="friese-tab"><a><i class="fa-duotone fa-french-fries"></i>&nbsp;&nbsp;friese</a></li>
-                <li class="tab" id="burger-tab"><a>&#127828;&nbsp;burger</a></li>
-                <li class="tab" id="kebab-tab"><a><i class="fa-duotone fa-shish-kebab"></i>&nbsp;&nbsp;kebab</a></li>
-            </ul>
-        </section>
-    </div>
-
-    <section class="page-main-container">
-        <div class="product-container drink">
-            <div class="product">
-                <p class="product-name">Pepsi</p>
-                <img src="static/images/product/drinks/drink1.png" alt="product">
-                <p class="price-container"><span class="price">$2.50</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-            </div>
-            <div class="product">
-                <p class="product-name">Milkshake</p>
-                <img src="static/images/product/drinks/drink2.png" alt="product">
-                <p class="price-container"><span class="price">$3.99</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-            </div>
-            <div class="product">
-                <p class="product-name">Orange juice</p>
-                <img src="static/images/product/drinks/drink3.png" alt="product">
-                <p class="price-container"><span class="price">$5.00</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-            </div>
-            <div class="product">
-                <p class="product-name">Coffee</p>
-                <img src="static/images/product/drinks/drink4.png" alt="product">
-                <p class="price-container"><span class="price">$7.45</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-            </div>
-            
-            <!-- Add other products as needed -->
-        </div>
-        <div class="product-container chicken">
-            <div class="product">
-                <p class="product-name">Roasted chicken</p>
-                <img src="static/images/product/chicken/chick1.png" alt="product">
-                <p class="price-container"><span class="price">$10.49</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-            </div>
-            <div class="product">
-                <p class="product-name">Bbq chicken</p>
-                <img src="static/images/product/chicken/chick2.png" alt="product">
-                <p class="price-container"><span class="price">$9.10</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-            </div>
-            <div class="product">
-                <p class="product-name">Fried chicken</p>
-                <img src="static/images/product/chicken/chick3.png" alt="product">
-                <p class="price-container"><span class="price">$7.50</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-            </div>
-            <!-- Add other products as needed -->
-        </div>
-        <div class="product-container rice">
-            <div class="product">
-                <p class="product-name">Fried rice</p>
-                <img src="static/images/product/rice/rice1.png" alt="product">
-                <p class="price-container"><span class="price">$8.00</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-            </div>
-            <div class="product">
-                <p class="product-name">Jollof rice</p>
-                <img src="static/images/product/rice/rice2.png" alt="product">
-                <p class="price-container"><span class="price">$11.00</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-            </div>
-            <!-- Add other products as needed -->
-        </div>
-        <div class="product-container friese">
-            <div class="product">
-                <p class="product-name">French fries</p>
-                <img src="static/images/product/friese/fries-20314.png" alt="product">
-                <p class="price-container"><span class="price">$6.99</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-            </div>
-            <!-- Add other products as needed -->
-        </div>
-        <div class="product-container burger">
-            <div class="product">
-                <p class="product-name">Veggie Burger</p>
-                <img src="static/images/product/burger/burger1.png" alt="product">
-                <p class="price-container"><span class="price">$8.50</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-            </div>
-            <div class="product">
-                <p class="product-name">Cheese burder</p>
-                <img src="static/images/product/burger/burger2.png" alt="product">
-                <p class="price-container"><span class="price">$10.00</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-            </div>
-            <!-- Add other products as needed -->
-        </div>
-        <div class="product-container kebab">
-            <div class="product">
-                <p class="product-name">Mixed kebab</p>
-                <img src="static/images/product/kebab/kebab.png" alt="product">
-                <p class="price-container"><span class="price">$9.50</span>&nbsp;&nbsp;<a href="#" class="order-btn">Order now</a></p>
-            </div>
-            <!-- Add other products as needed -->
-        </div>
-    </section>
-
-    <div id="basketModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Order Summary</h2>
-            <div id="orderItems">
-                <!-- Order items will be appended here dynamically -->
-            </div>
-            <div>
-                <label for="customerName">Customer Name:</label>
-                <input type="text" id="customerName" name="customerName">
-            </div>
-            <div>
-                <label>Order Number: <span id="orderNumber"></span></label>
-            </div>
-            <button id="confirmOrderBtn">Confirm Order</button>
-        </div>
-    </div>
-
-    <div class="suggestion-container">
-        <button id="showSuggestionFormBtn">Suggestion</button>
-        <div id="suggestionForm" style="display: none;">
-            <form id="suggestionFormContent">
-                <div>
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div>
-                    <label for="suggestion">Suggestion:</label>
-                    <textarea id="suggestion" name="suggestion" required></textarea>
-                </div>
-                <button type="submit">Submit Suggestion</button>
+                <button type="submit" class="login-btn">Login</button>
             </form>
         </div>
-        <div id="thankYouMessage" style="display: none;">
-            <p>Thank you for your suggestion!</p>
-        </div>
     </div>
-
-    <p style="margin-bottom:0px; text-align: center;">© 2024 Mr. F</p>
-
-    <script src="static/js/jquery-3.7.1.js"></script>
-    <script src="static/js/add_to_basket.js"></script>
-    <script src="static/js/suggestion.js"></script>
     <script>
-        $(document).ready(function () {
-            $(".tab").click(function () {
-                
-                $(".tab").removeClass("activeList");
-        
-                
-                $(this).addClass("activeList");
-        
-               
-                var targetClass;
-        
-                if ($(this).attr("id") === "drink-tab") {
-                    targetClass = ".product-container.drink";
-                } else if ($(this).attr("id") === "chicken-tab") {
-                    targetClass = ".product-container.chicken";
-                } else if ($(this).attr("id") === "rice-tab") {
-                    targetClass = ".product-container.rice";
-                } else if ($(this).attr("id") === "friese-tab") {
-                    targetClass = ".product-container.friese";
-                } else if ($(this).attr("id") === "burger-tab") {
-                    targetClass = ".product-container.burger";
-                } else if ($(this).attr("id") === "kebab-tab") {
-                    targetClass = ".product-container.kebab";
-                }
-        
-                // Fade out all product containers, then fade in the target container
-                $(".product-container.active").fadeOut(300, function () {
-                    $(this).removeClass("active").removeAttr("style"); // Remove inline style
-                    $(targetClass).fadeIn(300).addClass("active").removeAttr("style"); // Remove inline style
-                });
-            });
-        
-            // Set the default active tab and container
-            $("#drink-tab").addClass("activeList");
-            $(".product-container.drink").addClass("active").removeAttr("style"); // Remove inline style
-        });
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        // Toggle the user menu
-        $(".user").click(function() {
-            $("#userMenu").toggle();
-        });
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const storedUser = JSON.parse(localStorage.getItem('user'));
 
-        // Logout and redirect to the login page
-        $("#logoutBtn").click(function() {
-            // Perform any logout actions here 
-            sessionStorage.removeItem('isLoggedIn');
-            window.location.href = "login.html"; // Redirect to the login page
-        });
-
-        // Close the user menu if clicked outside
-        $(document).mouseup(function(e) {
-            var userMenu = $("#userMenu");
-            if (!userMenu.is(e.target) && userMenu.has(e.target).length === 0) {
-                userMenu.hide();
+            if (storedUser && storedUser.username === username && storedUser.password === password) {
+                alert('Login successful!');
+                sessionStorage.setItem('isLoggedIn', 'true');
+                window.location.href = 'main_page.html'; // Redirect to the main page or desired page
+            } else {
+                alert('Invalid username or password!');
             }
         });
-        
     </script>
 </body>
-
 </html>
