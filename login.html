@@ -24,6 +24,22 @@
             </form>
         </div>
     </div>
-    <script src="scripts.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+
+            if (storedUser && storedUser.username === username && storedUser.password === password) {
+                alert('Login successful!');
+                sessionStorage.setItem('isLoggedIn', 'true');
+                window.location.href = 'index.html'; // Redirect to the main page or desired page
+            } else {
+                alert('Invalid username or password!');
+            }
+        });
+    </script>
 </body>
 </html>
