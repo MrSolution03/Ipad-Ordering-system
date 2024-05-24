@@ -552,3 +552,25 @@ nav {
     width: 90%;
   }
 }
+
+
+/* Responsive adjustments */
+@media only screen and (max-width: 768px) {
+  .nav-logo img {
+    width: 60px; /* Adjusted width for smaller screens */
+  }
+
+  .nav-search-container input {
+    width: 120px; /* Adjusted width for smaller screens */
+    font-size: 0.9rem; /* Adjusted font size for smaller screens */
+  }
+
+  .product img {
+    width: 120px; /* Adjusted width for smaller screens */
+  }
+
+  .product .order-btn {
+    padding: 5px 10px; /* Adjusted padding for smaller screens */
+    font-size: 0.9rem; /* Adjusted font size for smaller screens */
+  }
+}
